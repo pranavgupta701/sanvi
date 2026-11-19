@@ -1,0 +1,21 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function owner() { return request.auth != null && request.auth.uid == 'REPLACE_WITH_OWNER_UID'; }
+    match /{path=**}/events/{event} { allow read: if owner(); }
+    match /visits/{visitor}/events/{event} {
+      allow create: if request.auth != null
+        && request.auth.uid == visitor
+        && request.auth.token.firebase.sign_in_provider == 'anonymous'
+        && request.resource.data.keys().hasAll(['type','value','createdAt'])
+        && request.resource.data.keys().hasOnly(['type','value','createdAt'])
+        && request.resource.data.createdAt == request.time
+        && request.resource.data.value is string
+        && ((request.resource.data.type in ['started','letter','gate'] && request.resource.data.value == '')
+          || (request.resource.data.type == 'date' && request.resource.data.value in ['movie','icecream','chai','walk'])
+          || (request.resource.data.type == 'bubble' && request.resource.data.value in ['0','1','2','3','last'])
+          || (request.resource.data.type == 'answer' && request.resource.data.value == 'yes'));
+      allow update, delete: if false;
+    }
+  }
+}

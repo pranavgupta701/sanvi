@@ -215,3 +215,19 @@ main>.hero.royal-hero{display:grid;grid-template-columns:minmax(0,600px) minmax(
 @media(max-width:360px){.royal-hero h1{font-size:40px}.opening-name{font-size:55px}.opening-address{font-size:19px}.opening-portrait{width:123px}.portrait-window{height:138px}.opening-whisper{font-size:12px}}
 @media(max-height:600px) and (min-width:701px){main>.hero.royal-hero{padding:35px 8%;gap:40px;grid-template-columns:minmax(0,470px) 220px}.royal-hero h1{font-size:56px}.opening-address{margin-top:14px;font-size:23px}.opening-name{font-size:70px}.opening-intro{margin:21px 0;font-size:13px}.portrait-window{height:260px}.portrait-crown{width:100px;height:69px;left:calc(50% - 50px);top:-65px}.portrait-seal{width:75px;height:75px;right:-20px}.portrait-mount figcaption{font-size:21px}.opening-whisper{font-size:14px;margin-top:19px}.is-crowning .portrait-crown{top:-46px}}
 @media(prefers-reduced-motion:reduce){.opening-copy,.opening-portrait,.coronation-sparks i{animation:none!important}.opening-portrait{transform:rotate(3deg)}}
+
+/* Fountain-pen reveal, with stable layout and a real disabled answer state. */
+#final-confession{position:relative;animation:none}
+#final-confession .ink-word,#final-confession .ink-fill{display:inline-block!important;font-size:inherit!important;font-family:inherit;font-weight:inherit;font-style:inherit;line-height:inherit;margin:0!important;white-space:pre;vertical-align:baseline;letter-spacing:inherit}
+#final-confession .ink-word{position:relative}
+#final-confession .ink-fill{clip-path:inset(0 100% 0 0)}
+#writing-pen{position:absolute;top:0;left:0;overflow:visible;pointer-events:none;z-index:5;transform-origin:0 0;filter:drop-shadow(3px 7px 4px #0007);opacity:0;visibility:hidden}
+.is-writing #writing-pen{visibility:visible}
+#say-yes:disabled{opacity:.28;cursor:default;filter:saturate(.2);box-shadow:none;transform:none}
+#say-yes{transition:opacity .8s,box-shadow .8s}
+.writing-complete #say-yes{box-shadow:0 5px 0 #a77e76,0 0 28px #f4d1ae22}
+.writing-skip{display:block;margin:15px auto 0;border:0;border-bottom:1px solid #dfc2cd55;background:none;color:#d6bccb;padding:4px;font:italic 16px 'Cormorant Garamond',serif}
+.writing-status{position:absolute;width:1px;height:1px;clip-path:inset(50%);overflow:hidden}
+
+.choice-disclosure{font:12px/1.4 'DM Sans',sans-serif;color:inherit;opacity:.8;margin:8px 0 12px}.opening-disclosure{margin-top:20px}.choice-save-status{position:fixed;bottom:3px;left:50%;transform:translateX(-50%);max-width:80vw;border:0;background:#fff6ed;color:#70334b;font:11px/1.3 'DM Sans',sans-serif;border-radius:8px;padding:4px 9px;z-index:30}.choice-save-status:empty{display:none}
+@media(max-width:700px){.choice-disclosure{font-size:10px;margin:6px 0}.opening-disclosure{margin-top:12px}}

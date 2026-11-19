@@ -1,3 +1,4 @@
+function shareChoice(type,value=''){document.dispatchEvent(new CustomEvent('sanvi-choice',{detail:{type,value}}));}
 const $=s=>document.querySelector(s);
 const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
 let soundOn=false,audioCtx,toastTimer;
@@ -11,11 +12,11 @@ function resetOpening(){
 }
 $('#celebrate').addEventListener('click',()=>{
   if($('#celebrate').disabled||chapter!==0)return;
-  $('#celebrate').disabled=true;$('.royal-hero').classList.add('is-crowning');
+  shareChoice('started');$('#celebrate').disabled=true;$('.royal-hero').classList.add('is-crowning');
   $('.royal-button-label').textContent='There’s my princess';$('#opening-status').textContent='Your royal treatment starts now, Sanvi.';
   chime();openingTimer=setTimeout(()=>showChapter(1),reduced?0:1450);
 });
-$('#open-letter').addEventListener('click',()=>{chime();$('#letter-dialog').showModal();$('#letter-dialog').scrollTop=0;$('#love-letter-title').focus({preventScroll:true});});
+$('#open-letter').addEventListener('click',()=>{chime();shareChoice('letter');$('#letter-dialog').showModal();$('#letter-dialog').scrollTop=0;$('#love-letter-title').focus({preventScroll:true});});
 document.querySelectorAll('dialog').forEach(dialog=>{dialog.querySelector('.close').addEventListener('click',()=>dialog.close());dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});});
 const chapters=[...document.querySelectorAll('main > section')];
 const gateIndex=chapters.indexOf($('#secret-door')),proposalIndex=chapters.indexOf($('#proposal'));
@@ -31,8 +32,8 @@ $('#chapter-next').addEventListener('click',()=>showChapter((chapter+1)%chapters
 document.querySelectorAll('a[href="#letter"],a[href="#wishes"],a.brand').forEach(link=>link.addEventListener('click',event=>{event.preventDefault();showChapter(link.hash==='#letter'?1:link.hash==='#wishes'?2:0);}));
 let doorTimer;
 function resetFinale(){resetBubbles();clearTimeout(doorTimer);$('#secret-door').classList.remove('is-opening');$('#open-door').disabled=false;$('#door-status').textContent='Go on, baby girl. I made this moment for you.';$('#proposal-question').hidden=false;$('#proposal-answer').hidden=true;}
-$('#open-door').addEventListener('click',()=>{if($('#open-door').disabled)return;$('#open-door').disabled=true;$('#secret-door').classList.add('is-opening');$('#door-status').textContent='Come on in, Sanvi. I’m right here.';chime();doorTimer=setTimeout(()=>showChapter(proposalIndex),reduced?0:1900);});
-$('#say-yes').addEventListener('click',()=>{if(!lastBubbleOpened)return;$('#proposal-question').hidden=true;$('#proposal-answer').hidden=false;$('#yes-heading').focus({preventScroll:true});$('#proposal').scrollTop=0;confetti();});
+$('#open-door').addEventListener('click',()=>{if($('#open-door').disabled)return;shareChoice('gate');$('#open-door').disabled=true;$('#secret-door').classList.add('is-opening');$('#door-status').textContent='Come on in, Sanvi. I’m right here.';chime();doorTimer=setTimeout(()=>showChapter(proposalIndex),reduced?0:1900);});
+$('#say-yes').addEventListener('click',()=>{if(!lastBubbleOpened||$('#say-yes').disabled)return;shareChoice('answer','yes');$('#proposal-question').hidden=true;$('#proposal-answer').hidden=false;$('#yes-heading').focus({preventScroll:true});$('#proposal').scrollTop=0;confetti();});
 $('#replay').addEventListener('click',()=>{resetFinale();resetAdventure();resetOpening();showChapter(0);});
 const datePlans={
   movie:{title:'Big screen.<br><em>Better company.</em>',note:'You pick the movie.<br>I’m hoping you’ll let me hold your hand.',caption:'Bas tum paas baithna. I might forget the plot. ♡'},
@@ -57,7 +58,7 @@ function resetAdventure(){
   chooseAdventure(document.querySelector('[data-date="movie"]'));
   $('.date-ticket').classList.remove('ticket-printing');
 }
-document.querySelectorAll('[data-date]').forEach(button=>button.addEventListener('click',()=>chooseAdventure(button)));
+document.querySelectorAll('[data-date]').forEach(button=>button.addEventListener('click',()=>{chooseAdventure(button);shareChoice('date',button.dataset.date)}));
 // Each bubble leaves a short promise behind; the last one is a separate reveal.
 const littlePromises=[
   ['You call me “baby.”', 'I forget how to act normal.'],
@@ -85,7 +86,7 @@ function burstBubble(button){
 function popLoveBubble(button){
   const index=Number(button.dataset.promise);
   if(poppedBubbles.has(index)||chapter!==proposalIndex)return;
-  poppedBubbles.add(index);burstBubble(button);button.disabled=true;button.classList.add('is-popped');
+  shareChoice('bubble',index);poppedBubbles.add(index);burstBubble(button);button.disabled=true;button.classList.add('is-popped');
   $('#promise-invitation').hidden=true;
   const line=document.createElement('p');line.className='promise-line';
   const plain=document.createElement('span');plain.textContent=littlePromises[index][0];
@@ -99,15 +100,16 @@ function popLoveBubble(button){
 }
 function revealLastBubble(){
   if(poppedBubbles.size!==4||lastBubbleOpened)return;
-  lastBubbleOpened=true;burstBubble($('#last-bubble'));$('#last-bubble').classList.add('is-popped');
+  shareChoice('bubble','last');lastBubbleOpened=true;burstBubble($('#last-bubble'));$('#last-bubble').classList.add('is-popped');
   $('#last-bubble').disabled=true;$('#proposal').classList.add('final-unfolding');
   bubbleLater(()=>{
     $('#bubble-chapter').hidden=true;$('#bubble-progress').hidden=true;$('.bubble-intro').hidden=true;
     $('#final-confession').hidden=false;$('#proposal').classList.add('confession-open');
-    $('#confession-question').focus({preventScroll:true});
+    startWriting();
   },reduced?0:650);
 }
 function resetBubbles(){
+  resetWriting();
   bubbleTimers.forEach(clearTimeout);bubbleTimers.clear();poppedBubbles.clear();lastBubbleOpened=false;
   $('#proposal').classList.remove('final-unfolding','confession-open');
   $('#promise-lines').replaceChildren();$('.bubble-bursts').replaceChildren();
@@ -119,5 +121,56 @@ function resetBubbles(){
 }
 document.querySelectorAll('[data-promise]').forEach(button=>button.addEventListener('click',()=>popLoveBubble(button)));
 $('#last-bubble').addEventListener('click',revealLastBubble);
+// Ink follows a fountain-pen nib; the answer is enabled only after the final line.
+let writingFrame=0,writingRun=0,writingWords=[];
+const writingTargets=['.confession-whisper','#final-confession h3','.confession-promise','.confession-question','.confession-footnote'];
+function prepareWriting(){
+  writingTargets.forEach(selector=>{
+    const el=$(selector);el.setAttribute('aria-label',el.textContent);
+    const walker=document.createTreeWalker(el,NodeFilter.SHOW_TEXT);const nodes=[];
+    while(walker.nextNode())nodes.push(walker.currentNode);
+    nodes.forEach(node=>{const fragment=document.createDocumentFragment();node.textContent.split(/(\s+)/).forEach(word=>{
+      if(!word.trim()){fragment.append(document.createTextNode(word));return;}
+      const shell=document.createElement('span');shell.className='ink-word';shell.setAttribute('aria-hidden','true');
+      const fill=document.createElement('span');fill.className='ink-fill';fill.textContent=word;shell.append(fill);fragment.append(shell);writingWords.push({shell,fill,duration:Math.max(130,word.length*46)});
+    });node.replaceWith(fragment);});
+  });
+}
+function resetWriting(){
+  writingRun++;cancelAnimationFrame(writingFrame);$('#final-confession').classList.remove('is-writing','writing-complete');
+  $('#say-yes').disabled=true;$('#writing-skip').hidden=true;$('#writing-status').textContent='';
+  writingWords.forEach(({fill})=>fill.style.clipPath='inset(0 100% 0 0)');
+}
+function finishWriting(){
+  writingRun++;cancelAnimationFrame(writingFrame);writingWords.forEach(({fill})=>fill.style.clipPath='inset(0 0% 0 0)');
+  $('#final-confession').classList.remove('is-writing');$('#final-confession').classList.add('writing-complete');
+  const wasSkip=document.activeElement===$('#writing-skip');$('#writing-skip').hidden=true;$('#say-yes').disabled=false;
+  $('#writing-status').textContent='My question is yours to answer, Sanvi.';
+  if(wasSkip)$('#say-yes').focus({preventScroll:true});
+}
+async function startWriting(){
+  resetWriting();const run=writingRun;
+  $('#final-confession').classList.add('is-writing');
+  if(reduced){finishWriting();return;}
+  $('#writing-skip').hidden=false;$('#writing-status').textContent='A few words, written just for you.';
+  await document.fonts.ready;if(run!==writingRun)return;
+  let index=0,start;const pen=$('#writing-pen');
+  function draw(now){
+    if(run!==writingRun)return;if(start===undefined)start=now+250;
+    const word=writingWords[index];if(!word){finishWriting();return;}
+    const progress=Math.max(0,Math.min(1,(now-start)/word.duration));
+    word.fill.style.clipPath=`inset(0 ${(1-progress)*100}% 0 0)`;
+    const r=word.shell.getBoundingClientRect(),base=$('#final-confession').getBoundingClientRect();
+    const scale=innerWidth<=600?.62:.85;
+    pen.style.transform=`translate(${r.left-base.left+r.width*progress-60*scale}px,${r.bottom-base.top-r.height*.18-170*scale}px) scale(${scale})`;
+    pen.style.opacity=now>=start?'1':'0';
+    if(progress===1){index++;start=now+65;}
+    writingFrame=requestAnimationFrame(draw);
+  }
+  writingFrame=requestAnimationFrame(draw);
+}
+prepareWriting();
+$('#writing-skip').addEventListener('click',finishWriting);
+
 resetAdventure();
 showChapter(0,false);
