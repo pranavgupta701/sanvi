@@ -231,3 +231,4 @@ main>.hero.royal-hero{display:grid;grid-template-columns:minmax(0,600px) minmax(
 
 .choice-disclosure{font:12px/1.4 'DM Sans',sans-serif;color:inherit;opacity:.8;margin:8px 0 12px}.opening-disclosure{margin-top:20px}.choice-save-status{position:fixed;bottom:3px;left:50%;transform:translateX(-50%);max-width:80vw;border:0;background:#fff6ed;color:#70334b;font:11px/1.3 'DM Sans',sans-serif;border-radius:8px;padding:4px 9px;z-index:30}.choice-save-status:empty{display:none}
 @media(max-width:700px){.choice-disclosure{font-size:10px;margin:6px 0}.opening-disclosure{margin-top:12px}}
+.choice-save-status{top:4px;bottom:auto;width:max-content;max-width:calc(100vw - 24px)}
