@@ -4,7 +4,17 @@ let soundOn=false,audioCtx,toastTimer;
 function chime(){if(!soundOn)return;try{audioCtx??=new(window.AudioContext||window.webkitAudioContext)();audioCtx.resume();[523.25,659.25,783.99,1046.5].forEach((freq,i)=>{const osc=audioCtx.createOscillator(),gain=audioCtx.createGain(),t=audioCtx.currentTime+i*.13;osc.type='sine';osc.frequency.value=freq;gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(.08,t+.02);gain.gain.exponentialRampToValueAtTime(.001,t+1);osc.connect(gain);gain.connect(audioCtx.destination);osc.start(t);osc.stop(t+1);});}catch{soundOn=false;}}
 function toast(message){$('#toast').textContent=message;$('#toast').classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').classList.remove('visible'),4200);}
 function confetti(){chime();if(reduced)return;const colors=['#aa2446','#e9ad4d','#f09cbd','#fff8ee'];for(let i=0;i<65;i++){const p=document.createElement('span');p.className='confetti-piece';p.textContent=['✦','♡','●','✧'][i%4];p.style.setProperty('--x',Math.random()*100+'%');p.style.setProperty('--color',colors[i%4]);p.style.setProperty('--duration',2+Math.random()*2+'s');p.style.setProperty('--drift',Math.random()*200-100+'px');p.style.animationDelay=Math.random()*.4+'s';$('#confetti').append(p);setTimeout(()=>p.remove(),4500);}}
-$('#celebrate').addEventListener('click',()=>{confetti();$('#celebrate').innerHTML='My princess, always <span>♛</span>';toast('Your crown, darling. Now for the fun part.');});
+let openingTimer;
+function resetOpening(){
+  clearTimeout(openingTimer);$('.royal-hero').classList.remove('is-crowning');
+  $('#celebrate').disabled=false;$('.royal-button-label').textContent='Let me crown you';$('#opening-status').textContent='';
+}
+$('#celebrate').addEventListener('click',()=>{
+  if($('#celebrate').disabled||chapter!==0)return;
+  $('#celebrate').disabled=true;$('.royal-hero').classList.add('is-crowning');
+  $('.royal-button-label').textContent='There’s my princess';$('#opening-status').textContent='Your royal treatment starts now, Sanvi.';
+  chime();openingTimer=setTimeout(()=>showChapter(1),reduced?0:1450);
+});
 $('#open-letter').addEventListener('click',()=>{chime();$('#letter-dialog').showModal();$('#letter-dialog').scrollTop=0;$('#love-letter-title').focus({preventScroll:true});});
 document.querySelectorAll('dialog').forEach(dialog=>{dialog.querySelector('.close').addEventListener('click',()=>dialog.close());dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});});
 const chapters=[...document.querySelectorAll('main > section')];
@@ -19,12 +29,11 @@ function showChapter(index,focus=true){chapter=Math.max(0,Math.min(chapters.leng
 $('#playful-back').addEventListener('click',()=>{chime();$('#stay-dialog').showModal();});
 $('#chapter-next').addEventListener('click',()=>showChapter((chapter+1)%chapters.length));
 document.querySelectorAll('a[href="#letter"],a[href="#wishes"],a.brand').forEach(link=>link.addEventListener('click',event=>{event.preventDefault();showChapter(link.hash==='#letter'?1:link.hash==='#wishes'?2:0);}));
-$('#celebrate').addEventListener('click',()=>showChapter(1));
 let doorTimer;
 function resetFinale(){resetBubbles();clearTimeout(doorTimer);$('#secret-door').classList.remove('is-opening');$('#open-door').disabled=false;$('#door-status').textContent='Go on, baby girl. I made this moment for you.';$('#proposal-question').hidden=false;$('#proposal-answer').hidden=true;}
 $('#open-door').addEventListener('click',()=>{if($('#open-door').disabled)return;$('#open-door').disabled=true;$('#secret-door').classList.add('is-opening');$('#door-status').textContent='Come on in, Sanvi. I’m right here.';chime();doorTimer=setTimeout(()=>showChapter(proposalIndex),reduced?0:1900);});
 $('#say-yes').addEventListener('click',()=>{if(!lastBubbleOpened)return;$('#proposal-question').hidden=true;$('#proposal-answer').hidden=false;$('#yes-heading').focus({preventScroll:true});$('#proposal').scrollTop=0;confetti();});
-$('#replay').addEventListener('click',()=>{resetFinale();resetAdventure();showChapter(0);});
+$('#replay').addEventListener('click',()=>{resetFinale();resetAdventure();resetOpening();showChapter(0);});
 const datePlans={
   movie:{title:'Big screen.<br><em>Better company.</em>',note:'You pick the movie. I’ll get the popcorn.<br>And yes, I’m sharing the armrest.',caption:'The movie is your choice. The seat beside you is mine. ♡'},
   icecream:{title:'Two scoops.<br><em>Zero hurry.</em>',note:'I’ll get the ice cream. You pick the flavours.<br>Yes, we can swap halfway through.',caption:'Excellent choice. I’m still asking for a bite.'},
