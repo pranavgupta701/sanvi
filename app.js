@@ -19,7 +19,7 @@ $('#open-letter').addEventListener('click',()=>{chime();$('#letter-dialog').show
 document.querySelectorAll('dialog').forEach(dialog=>{dialog.querySelector('.close').addEventListener('click',()=>dialog.close());dialog.addEventListener('click',e=>{if(e.target===dialog){const r=dialog.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)dialog.close();}});});
 const chapters=[...document.querySelectorAll('main > section')];
 const gateIndex=chapters.indexOf($('#secret-door')),proposalIndex=chapters.indexOf($('#proposal'));
-const chapterLabels=['My little surprise for you','My letter to you','Our next little adventure','I saved a surprise for you','I want to ask you something'];
+const chapterLabels=['My little surprise for you','My letter to you','Our first little adventure','I saved a surprise for you','I want to ask you something'];
 let chapter=0;
 const chapterNav=document.createElement('div');
 chapterNav.className='chapter-nav';chapterNav.setAttribute('role','group');chapterNav.setAttribute('aria-label','Continue your Princess Day journey');
@@ -35,7 +35,7 @@ $('#open-door').addEventListener('click',()=>{if($('#open-door').disabled)return
 $('#say-yes').addEventListener('click',()=>{if(!lastBubbleOpened)return;$('#proposal-question').hidden=true;$('#proposal-answer').hidden=false;$('#yes-heading').focus({preventScroll:true});$('#proposal').scrollTop=0;confetti();});
 $('#replay').addEventListener('click',()=>{resetFinale();resetAdventure();resetOpening();showChapter(0);});
 const datePlans={
-  movie:{title:'Big screen.<br><em>Better company.</em>',note:'You pick the movie. I’ll get the popcorn.<br>And yes, I’m sharing the armrest.',caption:'The movie is your choice. The seat beside you is mine. ♡'},
+  movie:{title:'Big screen.<br><em>Better company.</em>',note:'You pick the movie.<br>I’m hoping you’ll let me hold your hand.',caption:'Bas tum paas baithna. I might forget the plot. ♡'},
   icecream:{title:'Two scoops.<br><em>Zero hurry.</em>',note:'I’ll get the ice cream. You pick the flavours.<br>Yes, we can swap halfway through.',caption:'Excellent choice, cuto. I’m still asking for a bite.'},
   chai:{title:'A little rain.<br><em>A little chai.</em>',note:'I’ll save the window seat for you.<br>We can let the rest of the day wait.',caption:'Your window seat awaits, my highness.'},
   walk:{title:'No map.<br><em>Good company.</em>',note:'I’ll walk with you until we find somewhere worth stopping.<br>A snack stop absolutely counts.',caption:'You pick the direction. I’ll find the snacks.'}
@@ -60,10 +60,10 @@ function resetAdventure(){
 document.querySelectorAll('[data-date]').forEach(button=>button.addEventListener('click',()=>chooseAdventure(button)));
 // Each bubble leaves a short promise behind; the last one is a separate reveal.
 const littlePromises=[
-  ['I want to be a reason', 'you laugh like that.'],
-  ['When the day feels heavy,', 'I want to hold your hand.'],
-  ['Tell me the smallest thing.', 'I’ll still want to hear it.'],
-  ['When I picture tomorrow,', 'I keep looking for you.']
+  ['You call me “baby.”', 'I forget how to act normal.'],
+  ['Those eyes. Those soft lips.', 'My first-meeting distraction.'],
+  ['If your day gets heavy,', 'I want to listen, baby girl.'],
+  ['One Bumble match.', 'A real beginning, I hope.']
 ];
 const poppedBubbles=new Set();
 let lastBubbleOpened=false;
@@ -92,7 +92,7 @@ function popLoveBubble(button){
   const emphasis=document.createElement('em');emphasis.textContent=littlePromises[index][1];
   line.append(plain,emphasis);$('#promise-lines').append(line);
   const remaining=4-poppedBubbles.size;
-  $('#bubble-progress').textContent=remaining===0?'I saved my biggest wish for last.':remaining===1?'One little promise left, cutieee.':remaining+' little promises still floating…';
+  $('#bubble-progress').textContent=remaining===0?'I saved my biggest wish for last.':remaining===1?'One little confession left, cutieee.':remaining+' little confessions still floating…';
   if(!remaining){$('#last-bubble').hidden=false;$('#promise-signature').hidden=false;$('.bubble-garden').classList.add('last-wish-ready');}
   const next=remaining?document.querySelector('.love-bubble[data-promise]:not(:disabled)'):$('#last-bubble');
   next.focus({preventScroll:true});
@@ -115,7 +115,7 @@ function resetBubbles(){
   $('#last-bubble').hidden=true;$('.bubble-garden').classList.remove('last-wish-ready');
   document.querySelectorAll('.love-bubble').forEach(button=>{button.disabled=false;button.classList.remove('is-popped');});
   $('#bubble-chapter').hidden=false;$('.bubble-intro').hidden=false;$('#bubble-progress').hidden=false;
-  $('#bubble-progress').textContent='Four little bubbles. A heart full of you.';$('#final-confession').hidden=true;
+  $('#bubble-progress').textContent='Four little confessions. All your doing.';$('#final-confession').hidden=true;
 }
 document.querySelectorAll('[data-promise]').forEach(button=>button.addEventListener('click',()=>popLoveBubble(button)));
 $('#last-bubble').addEventListener('click',revealLastBubble);
