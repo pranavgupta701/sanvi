@@ -20,6 +20,7 @@
     <h2 id="adventure-heading">Sanvi, pick our next<br><em>little adventure.</em></h2>
     <p class="adventure-intro">I’ll handle the planning.<br> You get the fun part, darling.</p>
     <div class="adventure-choices" role="group" aria-label="Choose our next little adventure">
+      <button type="button" class="adventure-choice" data-date="movie" aria-pressed="false"><span class="choice-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 4v16M17 4v16M3 9h4M3 15h4M17 9h4M17 15h4M10 9l5 3-5 3z"/></svg></span><span>PVR movie date<small>You pick the movie. I’ll get the popcorn.</small></span><span class="choice-check" aria-hidden="true">♡</span></button>
       <button type="button" class="adventure-choice" data-date="icecream" aria-pressed="false"><span class="choice-icon" aria-hidden="true">✧</span><span>Ice cream after dark<small>I’m absolutely asking for a bite of yours.</small></span><span class="choice-check" aria-hidden="true">♡</span></button>
       <button type="button" class="adventure-choice" data-date="chai" aria-pressed="false"><span class="choice-icon" aria-hidden="true">☂</span><span>Chai &amp; a rainy window<small>I’ll find the window seat.</small></span><span class="choice-check" aria-hidden="true">♡</span></button>
       <button type="button" class="adventure-choice" data-date="walk" aria-pressed="false"><span class="choice-icon" aria-hidden="true">☾</span><span>A walk with no plan<small>I reserve the right to take the scenic route.</small></span><span class="choice-check" aria-hidden="true">♡</span></button>
@@ -28,11 +29,11 @@
   <div class="ticket-scene">
     <span class="ticket-side-note" aria-hidden="true">a little trouble, together.</span>
     <article class="date-ticket" aria-labelledby="ticket-title">
-      <div class="ticket-topline"><span>ONE LITTLE ADVENTURE</span><span aria-hidden="true">✦</span><span>JUST US TWO</span></div>
+      <div class="ticket-topline"><span id="ticket-brand">ONE LITTLE ADVENTURE</span><span aria-hidden="true">✦</span><span id="ticket-category">JUST US TWO</span></div>
       <div class="ticket-person"><div><span class="ticket-label">MY VERY SPECIAL GUEST</span><p>Sanvi<span>plus me, obviously.</span></p></div><img src="assets/sanvi.jpg" alt="Sanvi" width="960" height="1280"></div>
       <div class="ticket-plan"><span class="ticket-label" id="ticket-kicker">THE PLAN</span><h3 id="ticket-title">Your call,<br><em>darling.</em></h3><p id="ticket-note">Pick a little adventure.<br>I’ve saved you a place beside me.</p></div>
       <div class="ticket-tear" aria-hidden="true"></div>
-      <div class="ticket-stub"><div><span class="ticket-label">WHEN</span><p>When we’re both free</p></div><div class="ticket-stamp" id="ticket-stamp">ADMIT<br><strong>US TWO</strong></div></div>
+      <div class="ticket-stub"><div><span class="ticket-label" id="ticket-detail-label">WHEN</span><p id="ticket-detail">When we’re both free</p></div><div class="ticket-stamp" id="ticket-stamp">ADMIT<br><strong>US TWO</strong></div></div>
     </article>
     <p class="ticket-caption" id="date-status" role="status">Your choice. My excuse to see you.</p>
   </div>
