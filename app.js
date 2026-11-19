@@ -36,8 +36,8 @@ $('#say-yes').addEventListener('click',()=>{if(!lastBubbleOpened)return;$('#prop
 $('#replay').addEventListener('click',()=>{resetFinale();resetAdventure();resetOpening();showChapter(0);});
 const datePlans={
   movie:{title:'Big screen.<br><em>Better company.</em>',note:'You pick the movie. I’ll get the popcorn.<br>And yes, I’m sharing the armrest.',caption:'The movie is your choice. The seat beside you is mine. ♡'},
-  icecream:{title:'Two scoops.<br><em>Zero hurry.</em>',note:'I’ll get the ice cream. You pick the flavours.<br>Yes, we can swap halfway through.',caption:'Excellent choice. I’m still asking for a bite.'},
-  chai:{title:'A little rain.<br><em>A little chai.</em>',note:'I’ll save the window seat for you.<br>We can let the rest of the day wait.',caption:'Window seat: yours. Chai duty: mine.'},
+  icecream:{title:'Two scoops.<br><em>Zero hurry.</em>',note:'I’ll get the ice cream. You pick the flavours.<br>Yes, we can swap halfway through.',caption:'Excellent choice, cuto. I’m still asking for a bite.'},
+  chai:{title:'A little rain.<br><em>A little chai.</em>',note:'I’ll save the window seat for you.<br>We can let the rest of the day wait.',caption:'Your window seat awaits, my highness.'},
   walk:{title:'No map.<br><em>Good company.</em>',note:'I’ll walk with you until we find somewhere worth stopping.<br>A snack stop absolutely counts.',caption:'You pick the direction. I’ll find the snacks.'}
 };
 function chooseAdventure(button){
@@ -92,7 +92,7 @@ function popLoveBubble(button){
   const emphasis=document.createElement('em');emphasis.textContent=littlePromises[index][1];
   line.append(plain,emphasis);$('#promise-lines').append(line);
   const remaining=4-poppedBubbles.size;
-  $('#bubble-progress').textContent=remaining===0?'I saved my biggest wish for last.':remaining===1?'One little promise left, darling.':remaining+' little promises still floating…';
+  $('#bubble-progress').textContent=remaining===0?'I saved my biggest wish for last.':remaining===1?'One little promise left, cutieee.':remaining+' little promises still floating…';
   if(!remaining){$('#last-bubble').hidden=false;$('#promise-signature').hidden=false;$('.bubble-garden').classList.add('last-wish-ready');}
   const next=remaining?document.querySelector('.love-bubble[data-promise]:not(:disabled)'):$('#last-bubble');
   next.focus({preventScroll:true});
