@@ -46,36 +46,6 @@ main>.real-gate{display:block;padding:0;background:#0f0e0b;overflow:hidden;posit
 @media(max-width:540px){.hero h1{font-size:clamp(54px,8.4vh,76px);max-width:100%;letter-spacing:-2.5px;line-height:1.04}.hero .crown-scene{margin-bottom:20px}.hero h1 .darling{flex-direction:column;align-items:center;gap:7px;font-size:21px;margin-top:25px}.hero .darling-name{font-size:83px;line-height:.9;padding-bottom:12px}.hero .name-heart{font-size:25px;right:-19px;top:5px}.hero .intro{font-size:14px;max-width:290px;margin:20px 0 22px}.hero .side-note{display:none}.hero .sticker{top:4%;right:5%}.hero .title-star{right:-5px;top:5px;font-size:24px}.letter-section .envelope{height:225px;max-width:330px}.letter-peek{font-size:27px}.envelope-caption{font-size:8px}.letter-section .seal{width:56px;height:56px;left:calc(50% - 28px)}#letter-dialog.love-letter{width:calc(100vw - 24px);max-height:94dvh;box-shadow:0 25px 70px #4d182960,3px 4px 0 #e9d9c9}.letter-paper{padding:43px 26px 28px;background-image:radial-gradient(#ae8e6820 .6px,transparent .7px),linear-gradient(100deg,#f8ead54d,transparent 25%,#ffffff50);background-size:5px 5px,auto}.letter-paper:before{inset:10px}.letter-stationery{padding-right:2px;gap:12px;margin-bottom:22px}.letter-inscription{font-size:16px;max-width:155px}.letter-wax{width:42px;height:42px;font-size:30px}#letter-dialog #love-letter-title{font-size:29px;margin-bottom:20px;line-height:1.4}#letter-dialog #love-letter-title em{font-size:49px;margin-left:4px}.love-letter-body p{font-size:21px!important;line-height:1.46!important;margin-bottom:18px}.letter-signoff p{font-size:20px!important}.letter-postscript{font-size:17px}.love-letter .close{top:8px;margin-top:8px;margin-right:8px;width:31px;height:31px}.letter-signoff strong{font-size:40px}}
 @media(max-height:700px){.hero .crown-scene{height:55px;margin-bottom:12px}.hero .crown{width:80px}.hero h1{font-size:65px}.hero h1 .darling{margin-top:14px}.hero .darling-name{font-size:78px}.hero .intro{margin:14px 0 17px}}@media(max-width:540px) and (max-height:700px){.hero{padding-top:20px;padding-bottom:45px}.hero h1{font-size:55px}.hero h1 .darling{font-size:18px;gap:3px;margin-top:16px}.hero .darling-name{font-size:72px}.hero .intro{font-size:14px;margin:13px 0 16px}.hero .primary{padding:12px 23px}}
 
-/* A heart that opens to reveal the person it belongs to. */
-main>.heart-scene{isolation:isolate;overflow:hidden;position:relative;padding:28px 24px 100px;gap:0;background:radial-gradient(ellipse at 50% 54%,#a3455960,transparent 49%),radial-gradient(ellipse at 15% 5%,#92324a66,transparent 65%),#561b32;color:#f7d5dd}
-.heart-scene:before{content:'';position:absolute;inset:22px;border:1px solid #ebbdba15;pointer-events:none;z-index:-1}
-.heart-scene .heart-dedication{font:italic 21px/1.4 'Cormorant Garamond',Georgia,serif;margin:0 0 17px;color:#ebbec6}
-.heart-scene h2{font:400 clamp(40px,6.7vh,65px)/1.08 'Playfair Display',Georgia,serif;letter-spacing:-1.7px;margin:0;min-height:2.16em;color:#ffecdf;position:relative;z-index:1}
-.heart-scene h2 em{color:#efbbca}
-.heart-stage{position:relative;flex-shrink:0;width:min(390px,43vh,82vw);aspect-ratio:400/390;margin:12px auto 3px;display:grid;place-items:center}
-.heart-aura{position:absolute;inset:12%;border-radius:50%;background:#ffb49d;filter:blur(65px);opacity:.12;transition:opacity 1.2s,transform 1.2s;pointer-events:none}
-#heart-reveal{--heart-progress:0;position:relative;width:100%;height:100%;padding:0;border:0;background:transparent;touch-action:manipulation;user-select:none;-webkit-user-select:none;filter:drop-shadow(0 20px 24px #26041760);transition:transform .7s,filter .7s;border-radius:45%;color:#ffead3}
-#heart-reveal:hover{filter:drop-shadow(0 20px 30px #e47b8d35);transform:translateY(-4px)}
-#heart-reveal:focus-visible{outline:2px solid #ffe5bf;outline-offset:4px}
-.heart-jewel{width:100%;height:100%;overflow:visible;display:block}
-.heart-progress{stroke-dasharray:1;stroke-dashoffset:calc(1 - var(--heart-progress));opacity:0;transition:opacity .3s}
-.heart-portrait{opacity:0;transition:opacity 1.4s ease}
-.heart-shine{transition:opacity .8s}
-.heart-lock{position:absolute;left:0;right:0;top:34%;font:normal clamp(60px,9vh,90px)/1 'Allura',cursive;text-shadow:0 2px 15px #390a21;transition:opacity .5s,transform .7s}
-.heart-lock span{display:block;font:22px/1.4 Georgia;margin-top:5px;color:#f3c4c3}
-.heart-orbit{position:absolute;font:30px Georgia;color:#f3d3a9;pointer-events:none;animation:heart-glimmer 4s ease-in-out infinite}
-.orbit-one{top:17%;left:-8%;font-size:22px}.orbit-two{bottom:25%;right:-8%;animation-delay:-2s}
-.heart-scene #heart-hint{font:400 14px/1.6 'DM Sans',sans-serif;letter-spacing:.3px;color:#ebc8ce;max-width:320px;margin:4px auto 0;min-height:45px}
-.heart-message{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.heart-atmosphere{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:-1}
-.heart-atmosphere i{position:absolute;font:normal 20px Georgia;color:#f0c5bc66;animation:heart-glimmer 5s ease-in-out infinite}
-.heart-atmosphere i:nth-child(1){left:13%;top:25%}.heart-atmosphere i:nth-child(2){right:17%;top:17%;font-size:13px;animation-delay:-2s}.heart-atmosphere i:nth-child(3){left:22%;bottom:24%;font-size:27px;transform:rotate(-15deg)}.heart-atmosphere i:nth-child(4){right:12%;bottom:32%;animation-delay:-1s}.heart-atmosphere i:nth-child(5){right:28%;top:41%;font-size:12px;animation-delay:-3s}.heart-atmosphere i:nth-child(6){left:31%;top:15%;font-size:11px}
-.is-holding #heart-reveal{transform:scale(1.045)}.is-holding .heart-progress{opacity:1}.is-holding .heart-aura{opacity:.3;transform:scale(1.3)}
-.is-revealed .heart-portrait{opacity:1}.is-revealed .heart-lock{opacity:0;transform:scale(1.15);pointer-events:none}.is-revealed .heart-shine{opacity:0}.is-revealed .heart-aura{opacity:.25;transform:scale(1.25)}.is-revealed .heart-progress{opacity:0}.is-revealed #heart-reveal{cursor:default;filter:drop-shadow(0 15px 35px #e8988f38)}
-@keyframes heart-glimmer{0%,100%{opacity:.35}50%{opacity:1}}
-@media(max-width:540px){main>.heart-scene{padding:30px 20px 94px}.heart-scene:before{inset:12px}.heart-scene .heart-dedication{font-size:19px;margin-bottom:19px}.heart-scene h2{font-size:clamp(38px,5.8vh,48px);letter-spacing:-1px}.heart-stage{width:min(320px,39vh,80vw);margin-top:22px;margin-bottom:12px}.heart-scene #heart-hint{font-size:12px;min-height:38px}.heart-atmosphere i:nth-child(3){left:8%;bottom:23%}.heart-atmosphere i:nth-child(5){right:7%;top:34%}}
-@media(max-height:650px){main>.heart-scene{padding-top:18px;padding-bottom:80px}.heart-scene .heart-dedication{margin-bottom:9px;font-size:18px}.heart-scene h2{font-size:36px}.heart-stage{width:min(260px,38vh);margin:8px auto}.heart-scene #heart-hint{min-height:24px;font-size:12px}}
-
 /* A handful of promises, released one by one. */
 main>.bubble-world{padding:30px 5vw;background:radial-gradient(ellipse at 72% 45%,#704d6940,transparent 42%),radial-gradient(ellipse at 15% 80%,#73334a35,transparent 50%),#171323;color:#f6e4df;overflow:auto;isolation:isolate}
 .bubble-world:after{content:'';position:absolute;inset:19px;border:1px solid #e8c3b112;pointer-events:none;z-index:-1}
@@ -151,3 +121,49 @@ main>.bubble-world{padding:30px 5vw;background:radial-gradient(ellipse at 72% 45
 @media(max-width:600px) and (max-height:730px){main>.bubble-world.confession-open{padding-top:14px;padding-bottom:14px}.bubble-world .answer-note{font-size:17px;margin-top:10px}.confession-open .promises-again{margin-top:8px}}
 
 @media(max-width:600px){#promise-signature span{display:block}}
+
+/* A playful plan for two, printed as a keepsake ticket. */
+main>.adventure-scene{display:grid;grid-template-columns:minmax(0,510px) minmax(0,390px);justify-content:center;align-items:center;gap:clamp(40px,8vw,130px);padding:40px 6vw 105px;background:radial-gradient(ellipse at 86% 18%,#fff9edb0,transparent 55%),#fbe3ee;position:relative;isolation:isolate}
+.adventure-eyebrow{font:600 10px/1.5 'DM Sans',sans-serif;letter-spacing:2.2px;color:#9b5569;margin:0 0 22px}
+.adventure-copy h2{font:400 clamp(38px,4.1vw,60px)/1.08 'Playfair Display',Georgia,serif;letter-spacing:-1.9px;margin:0;color:#9d2445}
+.adventure-copy h2 em{font-weight:400;color:#b54b67}
+.adventure-intro{font:16px/1.65 'DM Sans',sans-serif;color:#8b4d60;margin:23px 0 25px}
+.adventure-choices{display:flex;flex-direction:column;gap:12px;max-width:430px}
+.adventure-choice{display:flex;align-items:center;gap:16px;text-align:left;padding:17px 18px;border:1px solid #bd7c8b55;background:#fff5f55e;border-radius:10px;box-shadow:0 3px 0 #a72d4610;color:#76243e;transition:transform .2s,background .2s,border-color .2s}
+.adventure-choice:hover{transform:translateX(4px);background:#fff8f3;filter:none}
+.adventure-choice>span:nth-child(2){font:500 19px/1.3 'Cormorant Garamond',Georgia,serif;flex:1}
+.adventure-choice small{display:block;font:11px/1.5 'DM Sans',sans-serif;color:#995b6d;margin-top:3px}
+.choice-icon{width:24px;text-align:center;font:27px Georgia;color:#b44965;flex-shrink:0}.choice-check{font:22px Georgia;opacity:.4}
+.adventure-choice[aria-pressed=true]{background:#a42c4a;color:#fff1ea;border-color:#a42c4a;box-shadow:0 4px 0 #75263d}
+.adventure-choice[aria-pressed=true] small,.adventure-choice[aria-pressed=true] .choice-icon,.adventure-choice[aria-pressed=true] .choice-check{color:#ffdae2;opacity:1}
+.ticket-scene{position:relative;perspective:1000px;max-width:390px;width:100%;justify-self:center}
+.ticket-side-note{display:block;font:30px/1.1 'Allura',cursive;text-align:right;color:#ad526a;transform:rotate(5deg);padding-right:10px;margin:0 0 12px}
+.date-ticket{background:#fff9ed;color:#743248;box-shadow:0 24px 55px #7c304021,4px 7px 0 #edcfc5;transform:rotate(3deg);border:1px solid #d4ad9c88;border-radius:3px;padding:23px 26px 18px;position:relative;background-image:radial-gradient(#98765417 .65px,transparent .75px);background-size:5px 5px}
+.ticket-topline{display:flex;align-items:center;justify-content:space-between;gap:10px;font:600 8px/1.5 'DM Sans',sans-serif;letter-spacing:1.2px;color:#966f63;padding-bottom:17px;border-bottom:1px solid #b97c7133}
+.ticket-topline>span:nth-child(2){font:18px Georgia;color:#ba9257}
+.ticket-person{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-top:22px}
+.ticket-label{font:500 8px/1.4 'DM Sans',sans-serif;letter-spacing:1.2px;color:#a17b70;display:block}
+.ticket-person p{font:48px/1 'Allura',cursive;margin:10px 0 0;color:#a13754}
+.ticket-person p span{display:block;font:italic 16px/1.5 'Cormorant Garamond',Georgia,serif;color:#976473;margin-top:5px}
+.ticket-person img{width:91px;height:114px;object-fit:cover;object-position:50% 45%;padding:4px;background:#fffef8;box-shadow:0 2px 9px #7031472b;transform:rotate(-6deg)}
+.ticket-plan{margin-top:24px;min-height:174px}
+.ticket-plan h3{font:400 41px/1.06 'Playfair Display',Georgia,serif;letter-spacing:-1.2px;color:#8a2f49;margin:9px 0 12px}
+.ticket-plan h3 em{color:#b15e6f;font-weight:400}
+.ticket-plan>p{font:16px/1.4 'Cormorant Garamond',Georgia,serif;margin:0;color:#8d6163;min-height:46px}
+.ticket-tear{border-top:1px dashed #b3847055;margin:20px -26px 16px;position:relative}
+.ticket-tear:before,.ticket-tear:after{content:'';position:absolute;top:-9px;width:16px;height:16px;border-radius:50%;background:#fbe3ee;border:1px solid #d4ad9c66}
+.ticket-tear:before{left:-9px}.ticket-tear:after{right:-9px}
+.ticket-stub{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.ticket-stub p{font:italic 17px 'Cormorant Garamond',Georgia,serif;margin:6px 0;color:#936d66}
+.ticket-stamp{border:1px solid #b3715b;border-radius:50%;width:64px;height:64px;display:flex;align-items:center;justify-content:center;flex-direction:column;flex-shrink:0;outline:1px dashed #b3715b66;outline-offset:-5px;font:8px/1.5 'DM Sans',sans-serif;letter-spacing:.8px;color:#a25e50;transform:rotate(-13deg)}
+.ticket-stamp strong{font-weight:600;font-size:9px}
+.ticket-caption{font:italic 18px/1.4 'Cormorant Garamond',Georgia,serif;color:#a45369;text-align:center;margin:24px 0 0;min-height:25px}
+.has-date .ticket-stamp{color:#9e2649;border-color:#9e2649;outline-color:#9e264966}
+.ticket-printing{animation:ticket-print .55s ease both}.ticket-printing .ticket-stamp{animation:ticket-stamp .6s .15s both}
+@keyframes ticket-print{0%{opacity:.5;transform:translateY(8px) rotate(3deg)}100%{opacity:1;transform:translateY(0) rotate(3deg)}}
+@keyframes ticket-stamp{0%{opacity:0;transform:scale(1.5) rotate(-13deg)}70%{opacity:1;transform:scale(.94) rotate(-13deg)}100%{opacity:1;transform:scale(1) rotate(-13deg)}}
+@media(max-width:1000px){main>.adventure-scene{gap:40px;padding-inline:5vw;grid-template-columns:minmax(0,1fr) minmax(0,340px)}.adventure-copy h2{font-size:42px}.adventure-choice{padding:14px 12px;gap:9px}.adventure-choice small{font-size:10px}.date-ticket{padding:20px}.ticket-tear{margin-inline:-20px}.ticket-person img{width:80px;height:105px}.ticket-person p{font-size:43px}.ticket-plan h3{font-size:36px}.ticket-topline{font-size:7px}}
+@media(max-width:650px){main>.adventure-scene{display:flex;flex-direction:column;gap:20px;padding:22px 24px 82px;justify-content:center;overflow:auto}.adventure-copy{width:100%;max-width:400px}.adventure-eyebrow{font-size:8px;letter-spacing:1.4px;margin-bottom:10px;text-align:center}.adventure-copy h2{font-size:36px;line-height:1.07;text-align:center;letter-spacing:-1px}.adventure-intro{font-size:12px;line-height:1.45;margin:12px 0 14px;text-align:center}.adventure-intro br{display:none}.adventure-choices{gap:8px;max-width:none}.adventure-choice{padding:10px 13px;gap:12px;border-radius:7px;min-height:53px}.adventure-choice>span:nth-child(2){font-size:17px}.adventure-choice small{font-size:9px;margin-top:2px}.choice-icon{font-size:23px;width:19px}.choice-check{font-size:18px}.ticket-scene{width:100%;max-width:360px}.ticket-side-note{display:none}.date-ticket{display:grid;grid-template-columns:88px minmax(0,1fr);gap:0 16px;padding:12px 16px 10px;transform:rotate(2deg);box-shadow:0 12px 25px #7c304021,2px 4px 0 #edcfc5}.ticket-topline{grid-column:1/-1;font-size:6px;letter-spacing:1px;padding-bottom:8px}.ticket-topline>span:nth-child(2){font-size:12px}.ticket-person{flex-direction:column-reverse;justify-content:center;gap:7px;margin-top:12px;text-align:center}.ticket-person .ticket-label{display:none}.ticket-person img{width:64px;height:82px;padding:3px}.ticket-person p{font-size:31px;margin:0}.ticket-person p span{font-size:11px;margin-top:0;white-space:nowrap}.ticket-plan{margin-top:12px;min-height:0;align-self:center}.ticket-label{font-size:6px;letter-spacing:1px}.ticket-plan h3{font-size:28px;line-height:1.05;letter-spacing:-.6px;margin:7px 0 8px}.ticket-plan>p{font-size:12px;line-height:1.25;min-height:44px}.ticket-tear{grid-column:1/-1;margin:12px -16px 9px}.ticket-tear:before,.ticket-tear:after{width:12px;height:12px;top:-7px}.ticket-tear:before{left:-7px}.ticket-tear:after{right:-7px}.ticket-stub{grid-column:1/-1}.ticket-stub p{font-size:12px;margin:3px 0}.ticket-stamp{width:38px;height:38px;font-size:5px;outline-offset:-3px;letter-spacing:.3px}.ticket-stamp strong{font-size:6px}.ticket-caption{font-size:14px;min-height:20px;margin:12px 0 0}}
+@media(max-width:650px) and (max-height:740px){main>.adventure-scene{gap:13px;padding:15px 24px 70px}.adventure-eyebrow{margin-bottom:8px;font-size:7px}.adventure-copy h2{font-size:30px}.adventure-intro{font-size:11px;margin:10px 0 11px}.adventure-choices{gap:6px}.adventure-choice{padding:8px 11px;min-height:48px}.adventure-choice>span:nth-child(2){font-size:16px}.adventure-choice small{font-size:8px}.date-ticket{padding-top:9px;padding-bottom:8px;grid-template-columns:75px minmax(0,1fr);gap:0 12px}.ticket-topline{padding-bottom:6px}.ticket-person{margin-top:9px;gap:5px}.ticket-person img{width:55px;height:69px}.ticket-person p{font-size:28px}.ticket-plan{margin-top:9px}.ticket-plan h3{font-size:25px;margin:5px 0 6px}.ticket-plan>p{font-size:11px;min-height:36px}.ticket-tear{margin-top:9px;margin-bottom:6px}.ticket-stamp{width:33px;height:33px}.ticket-caption{font-size:13px;margin-top:10px}}
+
+.adventure-choice:focus-visible{outline:2px solid #a51e3e;outline-offset:3px}
