@@ -21,10 +21,9 @@ $('#chapter-next').addEventListener('click',()=>showChapter((chapter+1)%chapters
 document.querySelectorAll('a[href="#letter"],a[href="#wishes"],a.brand').forEach(link=>link.addEventListener('click',event=>{event.preventDefault();showChapter(link.hash==='#letter'?1:link.hash==='#wishes'?2:0);}));
 $('#celebrate').addEventListener('click',()=>showChapter(1));
 let doorTimer;
-function resetFinale(){resetBubbles();clearTimeout(doorTimer);$('#secret-door').classList.remove('is-opening');$('#open-door').disabled=false;$('#door-status').textContent='Go on, baby girl. I made this moment for you.';$('#proposal-question').hidden=false;$('#proposal-answer').hidden=true;$('#answer-note').textContent='';}
+function resetFinale(){resetBubbles();clearTimeout(doorTimer);$('#secret-door').classList.remove('is-opening');$('#open-door').disabled=false;$('#door-status').textContent='Go on, baby girl. I made this moment for you.';$('#proposal-question').hidden=false;$('#proposal-answer').hidden=true;}
 $('#open-door').addEventListener('click',()=>{if($('#open-door').disabled)return;$('#open-door').disabled=true;$('#secret-door').classList.add('is-opening');$('#door-status').textContent='Come on in, Sanvi. I’m right here.';chime();doorTimer=setTimeout(()=>showChapter(proposalIndex),reduced?0:1900);});
 $('#say-yes').addEventListener('click',()=>{if(!lastBubbleOpened)return;$('#proposal-question').hidden=true;$('#proposal-answer').hidden=false;$('#yes-heading').focus({preventScroll:true});$('#proposal').scrollTop=0;confetti();});
-$('#talk-first').addEventListener('click',()=>{$('#answer-note').textContent='Take your time, darling. I want to hear your heart, too. ♡';});
 $('#replay').addEventListener('click',()=>{resetFinale();resetAdventure();showChapter(0);});
 const datePlans={
   movie:{title:'Big screen.<br><em>Better company.</em>',note:'You pick the movie. I’ll get the popcorn.<br>And yes, I’m sharing the armrest.',caption:'The movie is your choice. The seat beside you is mine. ♡'},
@@ -111,6 +110,5 @@ function resetBubbles(){
 }
 document.querySelectorAll('[data-promise]').forEach(button=>button.addEventListener('click',()=>popLoveBubble(button)));
 $('#last-bubble').addEventListener('click',revealLastBubble);
-$('#read-promises').addEventListener('click',()=>{resetBubbles();$('#answer-note').textContent='';document.querySelector('[data-promise]').focus({preventScroll:true});});
 resetAdventure();
 showChapter(0,false);
