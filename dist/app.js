@@ -139,10 +139,10 @@ function prepareWriting(){
 function resetWriting(){
   writingRun++;cancelAnimationFrame(writingFrame);$('#final-confession').classList.remove('is-writing','writing-complete');
   $('#say-yes').disabled=true;$('#writing-skip').hidden=true;$('#writing-status').textContent='';
-  writingWords.forEach(({fill})=>fill.style.clipPath='inset(0 100% 0 0)');
+  writingWords.forEach(({fill})=>{fill.style.visibility='hidden';fill.style.clipPath='inset(-0.5em 100% -0.5em -0.2em)';});
 }
 function finishWriting(){
-  writingRun++;cancelAnimationFrame(writingFrame);writingWords.forEach(({fill})=>fill.style.clipPath='inset(0 0% 0 0)');
+  writingRun++;cancelAnimationFrame(writingFrame);writingWords.forEach(({fill})=>{fill.style.visibility='visible';fill.style.clipPath='none';});
   $('#final-confession').classList.remove('is-writing');$('#final-confession').classList.add('writing-complete');
   const wasSkip=document.activeElement===$('#writing-skip');$('#writing-skip').hidden=true;$('#say-yes').disabled=false;
   $('#writing-status').textContent='My question is yours to answer, Sanvi.';
@@ -159,7 +159,8 @@ async function startWriting(){
     if(run!==writingRun)return;if(start===undefined)start=now+250;
     const word=writingWords[index];if(!word){finishWriting();return;}
     const progress=Math.max(0,Math.min(1,(now-start)/word.duration));
-    word.fill.style.clipPath=`inset(0 ${(1-progress)*100}% 0 0)`;
+    word.fill.style.visibility=progress>0?'visible':'hidden';
+    word.fill.style.clipPath=progress===1?'none':`inset(-0.5em ${(1-progress)*100}% -0.5em -0.2em)`;
     const r=word.shell.getBoundingClientRect(),base=$('#final-confession').getBoundingClientRect();
     const scale=innerWidth<=600?.62:.85;
     pen.style.transform=`translate(${r.left-base.left+r.width*progress-60*scale}px,${r.bottom-base.top-r.height*.18-170*scale}px) scale(${scale})`;
