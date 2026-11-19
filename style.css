@@ -220,7 +220,7 @@ main>.hero.royal-hero{display:grid;grid-template-columns:minmax(0,600px) minmax(
 #final-confession{position:relative;animation:none}
 #final-confession .ink-word,#final-confession .ink-fill{display:inline-block!important;font-size:inherit!important;font-family:inherit;font-weight:inherit;font-style:inherit;line-height:inherit;margin:0!important;white-space:pre;vertical-align:baseline;letter-spacing:inherit}
 #final-confession .ink-word{position:relative}
-#final-confession .ink-fill{clip-path:inset(0 100% 0 0)}
+#final-confession .ink-fill{visibility:hidden;clip-path:inset(-0.5em 100% -0.5em -0.2em)}
 #writing-pen{position:absolute;top:0;left:0;overflow:visible;pointer-events:none;z-index:5;transform-origin:0 0;filter:drop-shadow(3px 7px 4px #0007);opacity:0;visibility:hidden}
 .is-writing #writing-pen{visibility:visible}
 #say-yes:disabled{opacity:.28;cursor:default;filter:saturate(.2);box-shadow:none;transform:none}
