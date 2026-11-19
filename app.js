@@ -27,25 +27,27 @@ $('#say-yes').addEventListener('click',()=>{if(!lastBubbleOpened)return;$('#prop
 $('#talk-first').addEventListener('click',()=>{$('#answer-note').textContent='Take your time, darling. I want to hear your heart, too. ♡';});
 $('#replay').addEventListener('click',()=>{resetFinale();resetAdventure();showChapter(0);});
 const datePlans={
+  movie:{title:'Big screen.<br><em>Better company.</em>',note:'You pick the movie. I’ll get the popcorn.<br>And yes, I’m sharing the armrest.',caption:'The movie is your choice. The seat beside you is mine. ♡'},
   icecream:{title:'Two scoops.<br><em>Zero hurry.</em>',note:'I’ll get the ice cream. You pick the flavours.<br>Yes, we can swap halfway through.',caption:'Excellent choice. I’m still asking for a bite.'},
   chai:{title:'A little rain.<br><em>A little chai.</em>',note:'I’ll save the window seat for you.<br>We can let the rest of the day wait.',caption:'Window seat: yours. Chai duty: mine.'},
   walk:{title:'No map.<br><em>Good company.</em>',note:'I’ll walk with you until we find somewhere worth stopping.<br>A snack stop absolutely counts.',caption:'You pick the direction. I’ll find the snacks.'}
 };
 function chooseAdventure(button){
-  const plan=datePlans[button.dataset.date];
+  const plan=datePlans[button.dataset.date],isMovie=button.dataset.date==='movie';
+  $('.date-ticket').classList.toggle('movie-ticket',isMovie);
+  $('#ticket-brand').textContent=isMovie?'PVR':'ONE LITTLE ADVENTURE';
+  $('#ticket-category').textContent=isMovie?'MOVIE DATE INVITATION':'JUST US TWO';
+  $('#ticket-detail-label').textContent=isMovie?'OUR SEATS':'WHEN';
+  $('#ticket-detail').textContent=isMovie?'You + me, side by side':'When we’re both free';
   document.querySelectorAll('[data-date]').forEach(choice=>choice.setAttribute('aria-pressed',String(choice===button)));
   $('#ticket-title').innerHTML=plan.title;$('#ticket-note').innerHTML=plan.note;
-  $('#ticket-kicker').textContent='OUR LITTLE PLAN';$('#ticket-stamp').innerHTML='IT’S A<br><strong>DATE ♡</strong>';
+  $('#ticket-kicker').textContent='OUR LITTLE PLAN';$('#ticket-stamp').innerHTML=isMovie?'MOVIE<br><strong>DATE ♡</strong>':'IT’S A<br><strong>DATE ♡</strong>';
   $('#date-status').textContent=plan.caption;$('#adventure').classList.add('has-date');
   const ticket=$('.date-ticket');ticket.classList.remove('ticket-printing');void ticket.offsetWidth;ticket.classList.add('ticket-printing');
 }
 function resetAdventure(){
-  document.querySelectorAll('[data-date]').forEach(choice=>choice.setAttribute('aria-pressed','false'));
-  $('#ticket-title').innerHTML='Your call,<br><em>darling.</em>';
-  $('#ticket-note').innerHTML='Pick a little adventure.<br>I’ve saved you a place beside me.';
-  $('#ticket-kicker').textContent='THE PLAN';$('#ticket-stamp').innerHTML='ADMIT<br><strong>US TWO</strong>';
-  $('#date-status').textContent='Your choice. My excuse to see you.';
-  $('#adventure').classList.remove('has-date');$('.date-ticket').classList.remove('ticket-printing');
+  chooseAdventure(document.querySelector('[data-date="movie"]'));
+  $('.date-ticket').classList.remove('ticket-printing');
 }
 document.querySelectorAll('[data-date]').forEach(button=>button.addEventListener('click',()=>chooseAdventure(button)));
 // Each bubble leaves a short promise behind; the last one is a separate reveal.
@@ -110,4 +112,5 @@ function resetBubbles(){
 document.querySelectorAll('[data-promise]').forEach(button=>button.addEventListener('click',()=>popLoveBubble(button)));
 $('#last-bubble').addEventListener('click',revealLastBubble);
 $('#read-promises').addEventListener('click',()=>{resetBubbles();$('#answer-note').textContent='';document.querySelector('[data-promise]').focus({preventScroll:true});});
+resetAdventure();
 showChapter(0,false);
