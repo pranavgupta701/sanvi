@@ -23,10 +23,10 @@ $('#chapter-next').addEventListener('click',()=>showChapter((chapter+1)%chapters
 document.querySelectorAll('a[href="#letter"],a[href="#wishes"],a.brand').forEach(link=>link.addEventListener('click',event=>{event.preventDefault();showChapter(link.hash==='#letter'?1:link.hash==='#wishes'?2:0);}));
 $('#celebrate').addEventListener('click',()=>showChapter(1));
 let doorTimer;
-function resetFinale(){clearTimeout(doorTimer);$('#secret-door').classList.remove('is-opening');$('#open-door').disabled=false;$('#door-status').textContent='Go on, baby girl. I made this moment for you.';$('#proposal-question').hidden=false;$('#proposal-answer').hidden=true;$('#answer-note').textContent='';}
+function resetFinale(){resetBubbles();clearTimeout(doorTimer);$('#secret-door').classList.remove('is-opening');$('#open-door').disabled=false;$('#door-status').textContent='Go on, baby girl. I made this moment for you.';$('#proposal-question').hidden=false;$('#proposal-answer').hidden=true;$('#answer-note').textContent='';}
 $('#open-door').addEventListener('click',()=>{if($('#open-door').disabled)return;$('#open-door').disabled=true;$('#secret-door').classList.add('is-opening');$('#door-status').textContent='Come on in, Sanvi. I’m right here.';chime();doorTimer=setTimeout(()=>showChapter(5),reduced?0:1900);});
-$('#say-yes').addEventListener('click',()=>{$('#proposal-question').hidden=true;$('#proposal-answer').hidden=false;$('#yes-heading').focus({preventScroll:true});$('#proposal').scrollTop=0;confetti();});
-$('#talk-first').addEventListener('click',()=>{$('#answer-note').textContent='Of course, baby girl. I want to hear what’s in your heart, too. Take your time. I’m here to listen. ♡';});
+$('#say-yes').addEventListener('click',()=>{if(!lastBubbleOpened)return;$('#proposal-question').hidden=true;$('#proposal-answer').hidden=false;$('#yes-heading').focus({preventScroll:true});$('#proposal').scrollTop=0;confetti();});
+$('#talk-first').addEventListener('click',()=>{$('#answer-note').textContent='Take your time, darling. I want to hear your heart, too. ♡';});
 $('#replay').addEventListener('click',()=>{resetFinale();resetHeart();showChapter(0);});
 const heartScene=$('#wishes'),heartButton=$('#heart-reveal');
 let heartFrame=0,heartOpened=false,heartStart=0;
@@ -71,4 +71,66 @@ heartButton.addEventListener('pointerdown',startHeartHold);
 heartButton.addEventListener('click',openHeart);
 window.addEventListener('blur',cancelHeartHold);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)cancelHeartHold();});
+// Each bubble leaves a short promise behind; the last one is a separate reveal.
+const littlePromises=[
+  ['I want to be a reason', 'you laugh like that.'],
+  ['When the day feels heavy,', 'I want to hold your hand.'],
+  ['Tell me the smallest thing.', 'I’ll still want to hear it.'],
+  ['When I picture tomorrow,', 'I keep looking for you.']
+];
+const poppedBubbles=new Set();
+let lastBubbleOpened=false;
+const bubbleTimers=new Set();
+function bubbleLater(fn,delay){const timer=setTimeout(()=>{bubbleTimers.delete(timer);fn();},delay);bubbleTimers.add(timer);}
+function burstBubble(button){
+  if(reduced)return;
+  const garden=$('.bubble-garden').getBoundingClientRect(),box=button.getBoundingClientRect();
+  const burst=document.createElement('span');burst.className='bubble-burst';
+  burst.style.left=(box.x-garden.x+box.width/2)+'px';burst.style.top=(box.y-garden.y+box.height/2)+'px';
+  for(let i=0;i<12;i++){
+    const drop=document.createElement('i'),angle=i*Math.PI/6;
+    drop.style.setProperty('--dx',Math.cos(angle)*(60+i%3*18)+'px');
+    drop.style.setProperty('--dy',Math.sin(angle)*(60+i%3*18)+'px');
+    burst.append(drop);
+  }
+  $('.bubble-bursts').append(burst);bubbleLater(()=>burst.remove(),1000);
+}
+function popLoveBubble(button){
+  const index=Number(button.dataset.promise);
+  if(poppedBubbles.has(index)||chapter!==5)return;
+  poppedBubbles.add(index);burstBubble(button);button.disabled=true;button.classList.add('is-popped');
+  $('#promise-invitation').hidden=true;
+  const line=document.createElement('p');line.className='promise-line';
+  const plain=document.createElement('span');plain.textContent=littlePromises[index][0];
+  const emphasis=document.createElement('em');emphasis.textContent=littlePromises[index][1];
+  line.append(plain,emphasis);$('#promise-lines').append(line);
+  const remaining=4-poppedBubbles.size;
+  $('#bubble-progress').textContent=remaining===0?'I saved my biggest wish for last.':remaining===1?'One little promise left, darling.':remaining+' little promises still floating…';
+  if(!remaining){$('#last-bubble').hidden=false;$('#promise-signature').hidden=false;$('.bubble-garden').classList.add('last-wish-ready');}
+  const next=remaining?document.querySelector('.love-bubble[data-promise]:not(:disabled)'):$('#last-bubble');
+  next.focus({preventScroll:true});
+}
+function revealLastBubble(){
+  if(poppedBubbles.size!==4||lastBubbleOpened)return;
+  lastBubbleOpened=true;burstBubble($('#last-bubble'));$('#last-bubble').classList.add('is-popped');
+  $('#last-bubble').disabled=true;$('#proposal').classList.add('final-unfolding');
+  bubbleLater(()=>{
+    $('#bubble-chapter').hidden=true;$('#bubble-progress').hidden=true;$('.bubble-intro').hidden=true;
+    $('#final-confession').hidden=false;$('#proposal').classList.add('confession-open');
+    $('#confession-question').focus({preventScroll:true});
+  },reduced?0:650);
+}
+function resetBubbles(){
+  bubbleTimers.forEach(clearTimeout);bubbleTimers.clear();poppedBubbles.clear();lastBubbleOpened=false;
+  $('#proposal').classList.remove('final-unfolding','confession-open');
+  $('#promise-lines').replaceChildren();$('.bubble-bursts').replaceChildren();
+  $('#promise-invitation').hidden=false;$('#promise-signature').hidden=true;
+  $('#last-bubble').hidden=true;$('.bubble-garden').classList.remove('last-wish-ready');
+  document.querySelectorAll('.love-bubble').forEach(button=>{button.disabled=false;button.classList.remove('is-popped');});
+  $('#bubble-chapter').hidden=false;$('.bubble-intro').hidden=false;$('#bubble-progress').hidden=false;
+  $('#bubble-progress').textContent='Four little bubbles. A heart full of you.';$('#final-confession').hidden=true;
+}
+document.querySelectorAll('[data-promise]').forEach(button=>button.addEventListener('click',()=>popLoveBubble(button)));
+$('#last-bubble').addEventListener('click',revealLastBubble);
+$('#read-promises').addEventListener('click',()=>{resetBubbles();$('#answer-note').textContent='';document.querySelector('[data-promise]').focus({preventScroll:true});});
 showChapter(0,false);
