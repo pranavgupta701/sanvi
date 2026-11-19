@@ -1,0 +1,9 @@
+.DS_Store
+.openai/
+backups/
+node_modules/
+.env
+.env.*
+dist/asset-prompts.json
+dist/assets/proposal.png
+dist/assets/terrace.png
