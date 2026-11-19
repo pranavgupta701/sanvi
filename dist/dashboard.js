@@ -18,7 +18,7 @@ async function boot(){
     unsubscribe=db.onSnapshot(db.query(db.collectionGroup(store,'events'),db.orderBy('createdAt','desc'),db.limit(200)),snapshot=>{
       rows=snapshot.docs.map(d=>({...d.data(),visitor:d.ref.parent.parent.id}));const selected=$('#visitor').value;
       $('#visitor').replaceChildren(new Option('All browsers',''));[...new Set(rows.map(r=>r.visitor))].forEach(id=>$('#visitor').add(new Option(id.slice(0,8),id)));$('#visitor').value=selected;render();message('Connected · updates appear here automatically.');
-    },()=>message('Could not read choices. Check the owner UID, Firestore rules and collection-group index.'));
+    },error=>message('Could not read choices ('+error.code+'): '+error.message));
   });
   $('#login').addEventListener('submit',async e=>{e.preventDefault();$('#signin').disabled=true;try{await auth.signInWithEmailAndPassword(a,$('#email').value,$('#password').value);$('#password').value=''}catch{message('Sign-in failed. Check your email and password.')}finally{$('#signin').disabled=false}});
   $('#logout').addEventListener('click',()=>auth.signOut(a));
